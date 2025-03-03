@@ -49,10 +49,10 @@ int main(int argc, char *argv[]) {
             }
             amount = simpleStringSearch(source, search);
             if (amount == 0) {
-                std::cout << "\"" << search << "\" NOT found in \"" << source << "\"";
+                std::cout << "\"" << search << "\" NOT found in \"" << source << "\"" << std::endl;
             }
             else {
-                std::cout << "\"" << search << "\" Was found in position: " << amount ;
+                std::cout << "\"" << search << "\" Was found in \"" << source << "\" in position: " << amount << std::endl;
             }
         }
         // If there is one additional argument. For help
