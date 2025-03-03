@@ -3,17 +3,34 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
+
+// Struct for indexing lines
+struct indexing {
+    std::vector<int> index;
+    std::vector<std::string> line;
+};
+
+typedef struct indexing indexingStruct;
+
+// Struct for options
+struct options {
+    bool lineNo = false;
+    bool occurences = false;
+};
 
 // Call Functions first
 void searchFile(const std::string &file, const std::string sear);
+// Overloading functions
+int searchFile(const std::string &sour, const std::string &sear, const options opt, indexingStruct *index);
 int stringSearch(const std::string &sour, const std::string &sear);
 
 int main(int argc, char *argv[]) {
     try {
         std::string source, search;
-        // If there is no additional arguments
+        int amount;
+        // If there is no additional arguments. For increment 1
         if (argc == 1) {
-            int position;
             std::cout << "Give a string from which to search for: ";
             if (!std::getline(std::cin, source) || source.empty()) {
                 throw std::runtime_error("Empty input!");
@@ -22,19 +39,48 @@ int main(int argc, char *argv[]) {
             if (!std::getline(std::cin, search) || search.empty()) {
                 throw std::runtime_error("Empty input!");
             }
-            position = stringSearch(source, search);
-            if (position == 0) {
+            amount = stringSearch(source, search);
+            if (amount == 0) {
                 std::cout << "\"" << search << "\" NOT found in \"" << source << "\"";
             }
             else {
-                std::cout << "\"" << search << "\" Was found in " << position << " number of positions";
+                std::cout << "\"" << search << "\" Was found in " << amount << " number of positions";
             }
         }
-        // If there is two additional arguments
+        // If there is two additional arguments. For increment 2
         else if (argc == 3) {
             source = argv[2];
             search = argv[1];
             searchFile(source, search);
+        }
+        // If there is three additional arguments. For increment 3 and 4
+        else if (argc == 4) {
+            indexingStruct indexing, *indexing_p = &indexing;
+            options option;
+            source = argv[3];
+            search = argv[2];
+            std::string opt = argv[1];
+            if (opt.substr(0, 2) != "-o") {
+                throw std::runtime_error("Invalid option. Please use \"-o\" for options. ");
+            }
+            for (char c : opt.substr(2)) {
+				if (c == 'l')  option.lineNo = true;
+				else if (c == 'o') option.occurences = true;
+				else {
+					throw std::runtime_error("Invalid options after \"-o\"!\n");
+				}
+			}
+            amount = searchFile(source, search, option, indexing_p);
+            for (int i = 0; i < indexing.index.size(); i++) {
+                if (option.lineNo) {
+                    std::cout << indexing.index[i] << ":   ";
+                }
+                std::cout << indexing.line[i] << std::endl;
+            }
+            if (option.occurences) {
+                std::cout << "Number of strings in file: " << amount << std::endl;
+            }
+            
         }
         else {
             throw std::runtime_error("Invalid arguments!");
@@ -50,13 +96,14 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-// Searches the file for requested search and prints every line with desired search.
+// First iteration of searchFile Function for increment 2. Searches the file for requested search and prints every line with desired search.
 void searchFile(const std::string &sour, const std::string sear) {
     std::ifstream txtFile(sour);
     std::string line;
     int position{0};
     if (txtFile.is_open()){
         while (std::getline(txtFile, line)) {
+            // If string is found, prints it
             position = stringSearch(line, sear);
             if (position != 0) {
                 std::cout << line << std::endl;
@@ -69,8 +116,32 @@ void searchFile(const std::string &sour, const std::string sear) {
     }
 }
 
+// Second, more complicated iteration of searchFile function. Returns all needed values instead of printing them.
+int searchFile(const std::string &sour, const std::string &sear, const options opt, indexingStruct *index) {
+    std::ifstream txtFile(sour);
+    std::string line;
+    int tot {0}, amount {0}, position{0};
+    if (txtFile.is_open()){
+        while (std::getline(txtFile, line)) {
+            position++;
+            amount = stringSearch(line, sear);
+            // If string is found, save it to vector via pointer
+            if (amount != 0) {
+                (*index).index.emplace_back(position);
+                (*index).line.emplace_back(line);
+                // Adds string occurences to total values
+                tot += amount;
+            }
+        }
+        txtFile.close();
+    }
+    else {
+        throw std::runtime_error("Couldn't open the file");
+    }
+    return tot;
+}
 
-// Funtion that searches trough a string looking for another string. Works with nested for loops
+// Function that searches trough a string looking for another string. Works with nested for loops
 int stringSearch(const std::string &sour, const std::string &sear) {
     int position = 0, sourl = sour.length(), searl = sear.length();
     // Search through the text to find matches
