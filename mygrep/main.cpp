@@ -24,6 +24,7 @@ struct options {
 };
 
 // Call Functions first to get main on top of the stack
+int simpleStringSearch(const std::string &sour, const std::string &sear);
 int stringSearch(const std::string &sour, const std::string &sear);
 
 // Overloading functions for different increments
@@ -46,12 +47,12 @@ int main(int argc, char *argv[]) {
                 // Error if cin is empty
                 throw std::runtime_error("Empty input!");
             }
-            amount = stringSearch(source, search);
+            amount = simpleStringSearch(source, search);
             if (amount == 0) {
                 std::cout << "\"" << search << "\" NOT found in \"" << source << "\"";
             }
             else {
-                std::cout << "\"" << search << "\" Was found in " << amount << " number of positions";
+                std::cout << "\"" << search << "\" Was found in position: " << amount ;
             }
         }
         // If there is one additional argument. For help
@@ -199,7 +200,8 @@ int searchFile(const std::string &sour, const std::string &sear, const options o
     return tot;
 }
 
-// Function that searches trough a string looking for another string. Works with nested for loops
+// Function that searches trough a string looking for another string. Works with nested for loops. 
+// Used in increments 2, 3 and 4. Enables further developement capabilities
 int stringSearch(const std::string &sour, const std::string &sear) {
     int position = 0, sourl = sour.length(), searl = sear.length();
     // Search through the text to find matches
@@ -219,4 +221,13 @@ int stringSearch(const std::string &sour, const std::string &sear) {
     }
     // Returns how many times search was found
     return position;
+}
+
+// Function that returns string position in source. Used in increment 1.
+int simpleStringSearch(const std::string &sour, const std::string &sear) {
+    size_t position = sour.find(sear);
+    if (position != std::string::npos) {
+        return position;
+    }
+    else return 0;
 }
