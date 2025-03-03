@@ -54,6 +54,22 @@ int main(int argc, char *argv[]) {
                 std::cout << "\"" << search << "\" Was found in " << amount << " number of positions";
             }
         }
+        // If there is one additional argument. For help
+        else if (argc == 2) {
+            std::string arg = argv[1];
+            if (arg == "help" || "Help") {
+                std::cout << "Run mygrep.exe like: mygrep.exe options string filename" << std::endl;
+                std::cout << "Options argument starts with -o. additional arguments include:" << std::endl;
+                std::cout << "l - Shows line numbers before searched line" << std::endl;
+                std::cout << "o - Shows total number of lines where searched string was found" << std::endl;
+                std::cout << "r - Shows only lines that doesn't contain searched string" << std::endl;
+                std::cout << "i - Disables case sensitive search" << std::endl;
+                std::cout << "For example: mygrep.exe -olori hello myFile.txt" << std::endl;
+            }
+            else {
+                throw std::runtime_error("Invalid argument! Try help");
+            }
+        }
         // If there is two additional arguments. For increment 2
         else if (argc == 3) {
             source = argv[2];
