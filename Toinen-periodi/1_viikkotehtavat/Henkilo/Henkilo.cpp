@@ -1,3 +1,6 @@
+// Oskari Jarvinen 
+// T1 2p
+
 #include"Henkilo.h"
 #include<iostream>
 #include<string>

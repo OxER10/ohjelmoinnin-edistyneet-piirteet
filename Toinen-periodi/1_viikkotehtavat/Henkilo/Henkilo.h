@@ -1,6 +1,7 @@
-#pragma once
+// Oskari Jarvinen 
+// T1 2p
+
 #include<string>
-#include<iostream>
 
 class Henkilo {
     private:
