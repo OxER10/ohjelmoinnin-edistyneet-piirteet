@@ -1,49 +1,22 @@
 // Oskari Jarvinen 
-// T1 2p
-// T2 1p
+// T1 1p
+// T3 2p
 
 #include "Paivays.h"
 
 int main() {
 
-    // Constructor
-    Paivays testi;
-    Paivays testi2(17, 3, 2025);
-    // Purkajaa kutsuttiin ohjelman lopuksi
+    // Olion luonti ilman constructor parametreja
+    Kalenterimerkinta muistutus;
+    muistutus.tulostaMerkinta();
 
-    // Destructor kokeilu if lauseen sisällä
-    int jos = 2;
-    if (jos == 2) {
-        Paivays jostesti;
-    }
-    // Purkajaa kutsuttiin heti if lauseen loputtua
+    // Olion luonti constructor parametreilla
+    Paivays kalenteripaiva(3, 10, 2002);
+    Kalenterimerkinta syntymapaiva(kalenteripaiva, "Tanaan on minun syntymapaiva!!", true);
+    syntymapaiva.tulostaMerkinta();
 
-    // Destructor kokeilu for loopin sisällä
-    for (int i = 0; i < 3; i++) {
-        Paivays fortesti;
-    }
-    // Purkajaa kutsuttiin jokaisen silmukan suorituksen jälkeen
-
-    // Destructor kokeilu while loopin sisällä
-    while (jos < 5) {
-        Paivays whiletesti;
-        jos++;
-    }
-    // Purkajaa kutsuttiin jokaisen silmukan suorituksen jälkeen
-
-    // Destructor testi funktion sisällä
-    testi.destructorTest();
-    // Purkajaa kutsuttiin heti kun aliohjelma oli suoritettu
-    
-    // addPaiva olion testaus
-    for (int i = 0; i < 3; i++) {
-        testi.addPaiva();
-        testi.tulostaPaivays();
-    }
-    
-    // addPaiva olion testaus
-    for (int i = 0; i < 3; i++) {
-        testi2.addPaiva();
-        testi2.tulostaPaivays();
-    }
+    // Kayttajan luoma kalenterimerkinta-olio
+    Kalenterimerkinta kayttaja;
+    kayttaja.kysyTiedot();
+    kayttaja.tulostaMerkinta();
 }

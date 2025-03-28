@@ -1,27 +1,22 @@
 // Oskari Jarvinen 
-// T1 2p
-// T2 1p
+// T1 1p
+// T3 2p
 
 #include"Paivays.h"
 #include<iostream>
 
-// Paivays constructor
 Paivays::Paivays() {
-    std::cout << "Paivays-luokan parametriton rakentaja\n";
     paiva = 6;
     kuukausi = 9;
     vuosi = 2069;
 }
 
-// Paivays constructor argumenteilla
 Paivays::Paivays(int tempPaiva, int tempKuukausi, int tempVuosi) {
-    std::cout << "Henkilo-luokan 2 parametrinen rakentaja\n";
     paiva = tempPaiva;
     kuukausi = tempKuukausi;
     vuosi = tempVuosi;
 }
 
-// Destructor
 Paivays::~Paivays() {
     std::cout << "Paivays-luokan purkaja\n";
 }
@@ -51,6 +46,12 @@ bool Paivays::isKarkausVuosi(int vuosi) const {
 void Paivays::setVuosi(int uusiVuosi) { 
     vuosi = uusiVuosi; 
     if (isKarkausVuosi(vuosi)) { kuukaudenPaivat[1] = 29; }
+}
+
+void Paivays::setKuukaudenPaivat(int uusiKuukaudenPaivat[12]) {
+    for (int i = 0; i < 12; i++) {
+        kuukaudenPaivat[i] = uusiKuukaudenPaivat[i];
+    }
 }
 
 int Paivays::getPaiva() const { return paiva; }
@@ -97,5 +98,67 @@ void Paivays::addPaiva() {
             kuukausi = 1;
             vuosi++;
         }
+    }
+}
+
+Kalenterimerkinta::Kalenterimerkinta():Paivays() {
+    paivays = Paivays();
+    asia = "Muista tama asia tai kay huonosti";
+    muistutus = true;
+}
+
+Kalenterimerkinta::Kalenterimerkinta(Paivays tempPaivays, std::string tempAsia, bool tempMuistutus) {
+    paivays = tempPaivays;
+    asia = tempAsia;
+    muistutus = tempMuistutus;
+}
+
+Kalenterimerkinta::~Kalenterimerkinta() {
+    std::cout << "Destructor testi\n";
+}
+
+void Kalenterimerkinta::setPaivays(Paivays uusiPaivays) {
+    paivays = uusiPaivays;
+}
+
+void Kalenterimerkinta::setAsia(std::string uusiAsia) {
+    asia = uusiAsia;
+}
+
+void Kalenterimerkinta::setMuistutus(bool uusiMuistutus) {
+    muistutus = uusiMuistutus;
+}
+
+Paivays Kalenterimerkinta::getPaivays() const { return paivays; }
+
+std::string Kalenterimerkinta::getAsia() const { return asia; }
+
+bool Kalenterimerkinta::getMuistutus() const { return muistutus; }
+
+void Kalenterimerkinta::tulostaMerkinta() const {
+    std::cout << "Paivays: " << paivays.getPaiva() << "." << paivays.getKuukausi() << "." << paivays.getVuosi() << "\n";
+    std::cout << "Asia: " << asia << ".\n";
+    std::cout << "Muistutus: ";
+    if (muistutus) {
+        std::cout << "Paalla.\n";
+    }
+    else {
+        std::cout << "Poissa paalta.\n";
+    }
+}
+
+void Kalenterimerkinta::kysyTiedot() {
+    bool tarkistus;
+    paivays.kayttajanPaiva();
+    std::cout << "Ilmoita merkinnan asia: ";
+    std::cin.get();
+    std::getline(std::cin, asia);
+    std::cout << "Asetetaanko muistutus? (Y/N): ";
+    std::cin >> tarkistus;
+    if (tarkistus == 'y' || tarkistus == 'Y') {
+        muistutus = true;
+    }
+    else {
+        muistutus = false;
     }
 }

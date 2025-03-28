@@ -1,8 +1,9 @@
 // Oskari Jarvinen 
-// T1 2p
-// T2 1p
+// T1 1p
+// T3 2p
 
 #include<string>
+
 
 class Paivays {
     private: 
@@ -18,6 +19,7 @@ class Paivays {
         void setPaiva(int uusiPaiva);
         void setKuukausi(int uusiKuukausi);
         void setVuosi(int uusiVuosi);
+        void setKuukaudenPaivat(int kuukaudenPaivat[12]);
         bool isKarkausVuosi(int vuosi) const;
         int getPaiva() const;
         int getKuukausi() const;
@@ -25,4 +27,23 @@ class Paivays {
         void tulostaPaivays() const;
         void kayttajanPaiva();
         void addPaiva();
+};
+
+class Kalenterimerkinta : Paivays {
+    private:
+        Paivays paivays;
+        std::string asia;
+        bool muistutus;
+    public:
+        Kalenterimerkinta();
+        Kalenterimerkinta(Paivays tempPaivays, std::string tempAsia, bool tempMuistutus);
+        ~Kalenterimerkinta();
+        void setPaivays(Paivays uusiPaivays);
+        void setAsia(std::string uusiAsia);
+        void setMuistutus(bool uusiMuistutus);
+        Paivays getPaivays() const ;
+        std::string getAsia() const ;
+        bool getMuistutus() const ;
+        void tulostaMerkinta() const ;
+        void kysyTiedot();
 };

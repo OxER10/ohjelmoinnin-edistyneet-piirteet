@@ -1,6 +1,6 @@
 // Oskari Jarvinen 
-// T1 2p
-// T2 1p
+// T1 1p
+// T2 2p
 
 #include <iostream>
 #include <string>
@@ -8,21 +8,27 @@
 
 int main() {
 
-    // Constructor kokeilu
-    // Destructor kokeilu luokalla ohjelman alussa
-    Osoite matti;
-    Henkilo pekka("Pekka", 20);
+    // Constructor olion luonti
+    Osoite pekanOsoite("Kotikatu 2", "12345", "Kotikunta");
+    Henkilo pekka("Pekka", 20, pekanOsoite);
 
-
-
-
-    // Henkilo constructor kokeilu
-    matti.matinOsoite.setPostiosoite();
+    // Tulostetaan pekka-olion tiedot osoitteen kanssa
+    pekka.tulostaTiedot();
     
+    // Olioiden luoni settereitä varten
+    Osoite anninOsoite;
+    Henkilo anni;
 
-    // Henkilo constructor tarkistus
-    matti.tulostaHenkilonTiedot();
-    pekka.tulostaHenkilonTiedot();
-    
+    // Asetetaan tiedot settereillä
+    anninOsoite.setKatuosioite("Aurinkokuja 5");
+    anninOsoite.setPostinumero("55243");
+    anninOsoite.setKunta("Iloinen");
+    anni.setNimi("Anni");
+    anni.setIka(26);
+    anni.setOsoite(anninOsoite);
+
+    // Tulostetaan anni-olion tiedot osoitteen kanssa
+    anni.tulostaTiedot();
+
     return 0;  
 }

@@ -1,44 +1,33 @@
 // Oskari Jarvinen 
-// T1 2p
-// T2 1p
+// T1 1p
+// T2 2p
 
 #include"Henkilo.h"
 #include<iostream>
 #include<string>
 
 
-// Lisatty constructor ilman parametreja
 Henkilo::Henkilo() {
-    std::cout << "Henkilo-luokan parametriton rakentaja\n";
     nimi = "matti";
     ika = 76;
 }
 
-// Lisatty constructor 2 parametrilla
 Henkilo::Henkilo(std::string tempNimi, int tempIka) {
-    std::cout << "Henkilo-luokan 2 parametrinen rakentaja\n";
     nimi = tempNimi;
     ika = tempIka;
 }
 
-// Lisätty destructor
-Henkilo::~Henkilo() {
-    std::cout << "Henkilo-luokan purkaja\n";
+Henkilo::Henkilo(std::string tempNimi, int tempIka, Osoite tempOsoite) {
+    nimi = tempNimi;
+    ika = tempIka;
+    osoite = tempOsoite;
 }
 
-void Henkilo::destructorTest() {
-    Henkilo Temp;
-}
-
-// Lisatty tulostaHenkilonTiedot jäsenfunktio
-void Henkilo::tulostaHenkilonTiedot() const {
+void Henkilo::tulostaTiedot() const {
     std::cout << "Nimi: " << nimi << "\n";
     std::cout << "Ika: " << ika << "\n";
-}
+    std::cout << "Osoie: " << osoite.getKatuosoite() << " , " << osoite.getPostinumero() << " " << osoite.getKunta() << "\n";
 
-void Henkilo::tervehdi() const {
-    std::cout << "Hei! Nimeni on " << nimi << "\n";
-    std::cout << "Olen " << ika << " vuotias.\n";
 }
 
 void Henkilo::setIka(int uusiIka) {
@@ -47,18 +36,19 @@ void Henkilo::setIka(int uusiIka) {
     }
 }
 
-int Henkilo::getIka() const {
-    return ika;
-}
-
 void Henkilo::setNimi(std::string uusiNimi) {
     nimi = uusiNimi;
 }
 
-std::string Henkilo::getNimi() const {
-    return nimi;
+void Henkilo::setOsoite(Osoite uusiOsoite) {
+    osoite = uusiOsoite;
 }
 
+std::string Henkilo::getNimi() const { return nimi; }
+
+int Henkilo::getIka() const { return ika; }
+
+Osoite Henkilo::getOsoite() const { return osoite; }
 
 Osoite::Osoite() {
     katuosoite = "Kuntokatu 3";
@@ -70,10 +60,6 @@ Osoite::Osoite(std::string tempKatuosoite, std::string tempPostinumero, std::str
     katuosoite = tempKatuosoite;
     postinumero = tempPostinumero;
     kunta = tempKunta;
-}
-
-void Osoite::tulostaOsoiteTiedot() const {
-    std::cout << "Koko osoite: " << katuosoite << " , " << postinumero << " " << kunta << "\n";
 }
 
 void Osoite::setKatuosioite(std::string uusiKatuosoite) {
